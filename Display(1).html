@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        #myCarousel {
+            padding-top: 2%;
+            padding-right: 10%;
+            margin-right: 40px; 
+            margin-left: 100px; 
+            height: 30%;
+            max-width: 40%;
+            margin-bottom: 40px;
+            float: left;
+        }
+        body {
+            background-image: url('https://media.istockphoto.com/id/1130636356/photo/sunset-over-mountain-with-cosmos-blooming.jpg?s=612x612&w=0&k=20&c=0fK0C07rR3kqX4C9PLhqNjxSs6d6vSTMPTkPlD-CybQ=');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+       
+        #widgets-container {
+            padding-top: 10%;
+            padding-right: 10%;
+            margin-right: 40px;
+            margin-right: 40px;
+            height: 40%;
+            max-width: 50%;
+            float: right; 
+        }
+
+        #widgets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px; 
+        }
+
+        #widget1 {
+            background-color: rgba(11, 71, 135, 0.806);
+            color: white;
+            margin-bottom: 30px;
+        }
+        #widget2 {
+            width: 400px;
+        }
+        #widget3 {
+            color: white;
+            text-align: center;
+            width: 300px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        #widget2 {
+            margin-bottom: 5px; 
+            transform-origin: center center;
+        }
+
+        #widget3 {
+            width: 300px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="ARMRIT Certification Announcement.jpg" alt="ARMRIT Cert1">
+        </div>
+        <div class="item">
+            <img src="ARMRIT Certification Announcement[23].png" alt="ARMRIT Cert2">
+          </div>
+      
+          <div class="item">
+            <img src="ARMRIT Certification Announcement[54].png" alt="ARMIT Cert3">
+          </div>
+      
+          <div class="item">
+            <img src="ARMRIT Certification Announcement[96].jpg" alt="ARMRIT Cert4">
+        </div>
+        <div class="item">
+            <img src="ARRT Certification Announcement[85].png" alt="ARRT">
+           </div>
+      
+          <div class="item">
+            <img src="Canvas Support Flyer.png" alt="Canvas">
+          </div>
+      
+          <div class="item">
+            <img src="Career Services.png" alt="Career">
+          </div>
+      
+          <div class="item">
+            <img src="DAISY Award Flyer.jpg" alt="Daisy">
+        </div>
+        <div class="item">
+            <img src="EmailDeliveryFlyer_YalynPham_UPDATED.png" alt="Email">
+          </div>
+      
+          <div class="item">
+            <img src="English Tutor (2).jpg" alt="English Tutor">
+          </div>
+      
+          <div class="item">
+            <img src="Instagram for our Career Services Department is .jpg" alt="Insta">
+        </div>
+        <div class="item">
+            <img src="IT SUPPORT FLYER.png" alt="IT Support">
+           </div>
+      
+          <div class="item">
+            <img src="Math flyer updated.jpg" alt="Math">
+          </div>
+      
+          <div class="item">
+            <img src="portal id.png" alt="Portal">
+          </div>
+      
+          <div class="item">
+            <img src="Program Directors - Updated.png" alt="Program">
+        </div>
+        <div class="item">
+            <img src="Provost.png" alt="Provost">
+          </div>
+      
+          <div class="item">
+            <img src="ST Certification Announcement[3].png" alt="ST Cert">
+        </div>
+        <div class="item">
+            <img src="Student Services.png" alt="Services">
+           </div>
+      
+      
+          <div class="item">
+            <img src="Survey Annoucement Updated .png" alt="Survey">
+          </div>
+      
+          <div class="item">
+            <img src="Wifi Annoucement.png" alt="Wifi">
+        </div>
+    </div>
+</div>
+
+<div id="widgets-container">
+    <div id="widgets">
+        <div id="widget1">
+            <h2 id="datetime"></h2>
+        </div>
+        
+        <div id="widget3">
+            <img src="Hours.jpg" alt="Widget 3 Image">
+        </div>
+        <div id="widget2">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/33d75n117d87/santa-ana/?unit=us"
+               data-label_1="CNI College" data-label_2="WEATHER" data-theme="original">CNI College WEATHER</a>
+            <script>
+                !function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = 'https://weatherwidget.io/js/widget.min.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'weatherwidget-io-js');
+            </script>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateDateTime() {
+        var dateTimeElement = document.getElementById('datetime');
+        var currentDate = new Date();
+        var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+        var formattedDate = currentDate.toLocaleDateString('en-US', options);
+        var formattedTime = currentDate.toLocaleTimeString('en-US');
+        dateTimeElement.textContent = formattedDate + ' ' + formattedTime;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+</script>
+</body>
+</html>
+
+

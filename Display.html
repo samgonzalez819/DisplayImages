@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        #myCarousel {
+            padding-top: 5%;
+            padding-right: 10%;
+            margin-right: 40px; 
+            margin-left: 100px; 
+            height: 30%;
+            max-width: 40%;
+            margin-bottom: 40px;
+            float: left;
+        }
+        body {
+            background-image: url('https://media.istockphoto.com/id/1130636356/photo/sunset-over-mountain-with-cosmos-blooming.jpg?s=612x612&w=0&k=20&c=0fK0C07rR3kqX4C9PLhqNjxSs6d6vSTMPTkPlD-CybQ=');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+       
+        #widgets-container {
+            padding-top: 5%;
+            padding-right: 10%;
+            margin-right: 60px;
+            margin-right: 60px;
+            height: 40%;
+            max-width: 40%;
+            float: right; 
+        }
+
+        #widgets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px; 
+        }
+
+        #time {
+            background-color: rgba(11, 71, 135, 0.806);
+            color: white;
+            margin-bottom: 20px;
+        }
+        #weather {
+            width: 400px;
+        }
+        #hours {
+            color: white;
+            background-color: rgb(11, 71, 135, 0.806);
+            text-align: center;
+            font-size: 150%;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        #weather {
+            margin-bottom: 5px; 
+            transform-origin: center center;
+        }
+
+        #hours {
+            width: 300px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <!-- Images will be dynamically loaded here -->
+    </div>
+</div>
+
+<div id="widgets-container">
+    <div id="widgets">
+        <div id="time">
+            <h2 id="datetime"></h2>
+        </div>
+        
+        <div id="hours">
+           <p> * CNI College Hours * </p>     
+           <p> Monday - Friday </p>    
+           <p> 8:00 am - 5:30 pm </p>       
+           <p> Saturday </p>
+           <p> Student Labs </p>
+           <p> Sunday </p>
+           <p> ST Labs </p>
+        </div>
+        <div id="weather">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/33d75n117d87/santa-ana/?unit=us"
+               data-label_1="CNI College" data-label_2="WEATHER" data-theme="original">CNI College WEATHER</a>
+            <script>
+                !function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = 'https://weatherwidget.io/js/widget.min.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'weatherwidget-io-js');
+            </script>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateDateTime() {
+        var dateTimeElement = document.getElementById('datetime');
+        var currentDate = new Date();
+        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var timeOptions = { hour: 'numeric', minute: 'numeric' };
+        var formattedDate = currentDate.toLocaleDateString('en-US', dateOptions);
+        var formattedTime = currentDate.toLocaleTimeString('en-US', timeOptions);
+        dateTimeElement.textContent = formattedDate + ' ' + formattedTime;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Function to fetch images from the provided OneDrive folder
+    async function fetchImagesFromOneDrive(folderUrl) {
+        try {
+            console.log('Fetching images from:', folderUrl);
+            const response = await fetch(folderUrl);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const imageLinks = Array.from(doc.querySelectorAll('a'))
+                                    .map(a => a.href)
+                                    .filter(href => /\.(jpeg|jpg|gif|png)$/i.test(href));
+            updateCarousel(imageLinks);
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+    }
+
+    // Function to update the carousel with images
+    function updateCarousel(imageUrls) {
+        const carouselInner = document.querySelector('.carousel-inner');
+        carouselInner.innerHTML = ''; // Clear existing items
+
+        imageUrls.forEach((url, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item' + (index === 0 ? ' active' : '');
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = 'Carousel Image ' + (index + 1);
+            itemDiv.appendChild(img);
+            carouselInner.appendChild(itemDiv);
+        });
+    }
+
+    // Fetch and update images on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const folderUrl = 'https://cnicollege-my.sharepoint.com/:f:/g/personal/sgonzalez_cnicollege_edu/EjsPLFwR6QJGmTF0gaA7NwwBF5S0W0ptDA_esiprCY8fCA?e=fhcfxp';
+        fetchImagesFromOneDrive(folderUrl);
+
+        // Automatically slide the carousel every 5 seconds
+        $('#myCarousel').carousel({
+            interval: 5000 // 5 seconds
+        });
+    });
+</script>
+</body>
+</html>
